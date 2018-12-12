@@ -8,7 +8,14 @@
   <body>
     <input type="text" id= "inputWord" value="Words..."> <!-- This is where the words will be inputted -->
     <button onclick="submitWord()">Submit Word</button> <!-- Submit button for input words -->
-    <table></table> <!-- This is where the words will be outputted w/ their value -->
+    <div>
+      <table id = "wordList" border = "1">
+        <tr>
+          <th> Word </th>
+          <th> Points </th>
+        </tr>
+      </table> <!-- This is where the words will be outputted w/ their value -->
+    </div>
     <table></table> <!-- Table where you can guess the value for each letter -->
 
   <script>
@@ -77,6 +84,22 @@
       this.value = tempValue;
     }
 
+    updateTable() { //Update table w/ word and value
+      let mainTable = document.getElementById("wordList"); //Makes the table easily referencable
+      let row = document.createElement("tr"); //Creating row
+      //For the word
+      let column = document.createElement("td"); //Creating text
+      let text = document.createTextNode(this.word); //Text for word
+        column.appendChild(text); //Adding the elements
+        row.appendChild(column);
+      //For the point value
+      column = document.createElement("td"); //Creating text
+      text = document.createTextNode(this.value); //Text for value
+        column.appendChild(text); //Adding the elements
+        row.appendChild(column);
+      mainTable.appendChild(row);
+    }
+
   }
 
   let words = []; //All words inputted
@@ -104,12 +127,11 @@
     words.push(new Word(currentWord));
     if (words[words.length - 1].validWord()) { //Checks if word only uses alphabet characters
       words[words.length - 1].getWordValue(); //Gets value
+      words[words.length - 1].updateTable(); //Updates table
     }
     else { //Deletes b/c not a valid word
       words.pop();
     }
-
-    console.log(words);
   }
 
   </script>
