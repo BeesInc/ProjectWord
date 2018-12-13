@@ -6,6 +6,7 @@
     <title>Word Game</title>
   </head>
   <body>
+  <script type="text/javascript" src="englishDict.js"></script> <!-- Array with the English Dictionary -->
     <input type="text" id= "inputWord" value="Words..."> <!-- This is where the words will be inputted -->
     <button onclick="submitWord()">Submit Word</button> <!-- Submit button for input words -->
     <div>
@@ -17,123 +18,6 @@
       </table> <!-- This is where the words will be outputted w/ their value -->
     </div>
     <table></table> <!-- Table where you can guess the value for each letter -->
-
-  <script>
-
-  class Letter {
-    constructor (l) {
-      this.letter = l; //What letter this is
-      this.trueValue = 0; //True value
-      this.guessValue = 0; //User guessed value
-    }
-
-    getTrueValue() {
-      let repeats = true; //True = there is a repeat, false = there isn't one
-      let newValue; //Random value
-
-      while (repeats) {
-        newValue = Math.ceil(Math.random() * 26); //generates number
-        for (let n in letters) {
-          if (letters[n].trueValue == newValue) { //Found a repeat
-            repeats = true;
-            break;
-          }
-          else { //No repeats
-            repeats = false;
-          }
-        }
-      }
-      this.trueValue = newValue;
-    }
-
-  }
-
-  class Word {
-    constructor (w) {
-      this.word = w; //Word
-      this.value = 0; //Value
-    }
-
-    validWord() { //checks if the word only uses letters in the alphabet
-      let valid = true;
-      for (let i = 0; i < this.word.length; i++) {
-        let charChecksOut = false;
-        for (let n in letters) {
-          if (this.word.charAt(i) == letters[n].letter) {
-            charChecksOut = true; //Character is an English Alphabet letter
-            break;
-          }
-        }
-        if (!charChecksOut) { //The recent character is not valid
-          return false;
-        }
-      }
-      return true; //It's all good
-    }
-
-    getWordValue() { //Gets word value
-      let tempValue = 0; //Value that will be added up
-      for (let i = 0; i < this.word.length; i++) {
-        for (let n in letters) { //Goes through all letters
-          if (this.word.charAt(i) == letters[n].letter) {
-            tempValue += letters[n].trueValue;
-            break;
-          }
-        }
-      }
-      this.value = tempValue;
-    }
-
-    updateTable() { //Update table w/ word and value
-      let mainTable = document.getElementById("wordList"); //Makes the table easily referencable
-      let row = document.createElement("tr"); //Creating row
-      //For the word
-      let column = document.createElement("td"); //Creating text
-      let text = document.createTextNode(this.word); //Text for word
-        column.appendChild(text); //Adding the elements
-        row.appendChild(column);
-      //For the point value
-      column = document.createElement("td"); //Creating text
-      text = document.createTextNode(this.value); //Text for value
-        column.appendChild(text); //Adding the elements
-        row.appendChild(column);
-      mainTable.appendChild(row);
-    }
-
-  }
-
-  let words = []; //All words inputted
-  let letters = []; //Letters
-  let usedOnlyForReference = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-  "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]; //Letters in corresponding array positions
-
-  main(); //Main function that runs on startup
-
-  function main() {
-    generateLetters();
-    console.log(letters);
-  }
-
-  function generateLetters() {
-    for (i = 0; i < 26; i++) {
-      letters.push(new Letter(usedOnlyForReference[i]));
-      letters[i].getTrueValue();
-    }
-  }
-
-  function submitWord() { //Word submission process
-    let currentWord = document.getElementById("inputWord").value; //Getting the new word
-    currentWord = currentWord.toString(); //Converting to a String just incase
-    words.push(new Word(currentWord));
-    if (words[words.length - 1].validWord()) { //Checks if word only uses alphabet characters
-      words[words.length - 1].getWordValue(); //Gets value
-      words[words.length - 1].updateTable(); //Updates table
-    }
-    else { //Deletes b/c not a valid word
-      words.pop();
-    }
-  }
-
-  </script>
+  <script src="main.js"></script> <!-- the actual javascript -->
   </body>
 </html>
