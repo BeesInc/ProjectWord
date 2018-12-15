@@ -24,6 +24,18 @@ class Letter {
     this.trueValue = newValue;
   }
 
+  static checkAnswers() {
+    for (let n in letters) {
+      letters[n].guessValue = document.getElementById(letters[n].letter + "Guess").value; //Storing the guess value
+      if (letters[n].guessValue == letters[n].trueValue) {//If the guess is correct then it turns green
+        document.getElementById(letters[n].letter + "Label").style.backgroundColor = "lime";
+      }
+      else {//If it is wrong, then it turns red
+        document.getElementById(letters[n].letter + "Label").style.backgroundColor = "red";
+      }
+    }
+  }
+
 }
 
 class Word {
@@ -92,6 +104,7 @@ main(); //Main function that runs on startup
 
 function main() {
   generateLetters();
+  generateAnsTable();
   console.log(letters);
 }
 
@@ -113,4 +126,51 @@ function submitWord() { //Word submission process
   else { //Deletes b/c not a valid word
     words.pop();
   }
+}
+
+function generateAnsTable() { //Generates all the entire answer table
+  let mainTable = document.getElementById("letterCheck");
+  for (let i in letters) { //Goes through each letter
+    let row = document.createElement("tr"); //Creating row
+
+    //Creating the letter in the row
+    let column = document.createElement("td"); //Creating the letter
+    let text = document.createTextNode(letters[i].letter); //Text of the letter
+    column.id = letters[i].letter + "Label"; //Id for future reference
+      column.appendChild(text); //Adding the elements
+      row.appendChild(column);
+
+    //Creating the guess input
+    column = document.createElement("td"); //Creating the input section
+    let input = document.createElement("input"); //The input
+    input.type = "number"; //The specifics of the input
+    input.id = letters[i].letter + "Guess";
+    input.value = 0;
+    input.style = "width: 45px;"
+      column.appendChild(input); //Adding the elements
+      row.appendChild(column);
+
+    mainTable.appendChild(row); //Adding it to the table
+  }
+}
+
+function newGame() { //Geneartes new game
+  words = []; //Resetting the variables
+  letters = [];
+
+  document.getElementById("letterCheck").innerHTML = ""; //Reseting answer table
+  //Rebuilding the header
+    let mainTable = document.getElementById("letterCheck"); //Find the table
+    let row = document.createElement("tr"); //Creates header row
+    let column = document.createElement("th"); //Creates title
+    let text = document.createTextNode("Letters"); //Creates title text
+      column.appendChild(text); //Adding the elements
+      row.appendChild(column);
+    column = document.createElement("th"); //Creates title
+    text = document.createTextNode("Guess"); //Creates title text
+      column.appendChild(text); //Adding the elements
+      row.appendChild(column);
+    mainTable.appendChild(row); //Adding it to the table
+
+  main(); //Regenerates the variables & tables
 }

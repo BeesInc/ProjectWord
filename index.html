@@ -9,15 +9,22 @@
   <script type="text/javascript" src="englishDict.js"></script> <!-- Array with the English Dictionary -->
     <input type="text" id= "inputWord" value="Words..."> <!-- This is where the words will be inputted -->
     <button onclick="submitWord()">Submit Word</button> <!-- Submit button for input words -->
+    <button onclick="Letter.checkAnswers()">Check Answers</button> <!-- Checks answers -->
+    <button onclick="newGame()">New Game?</button> <!-- Resets for new game -->
     <div>
-      <table id = "wordList" border = "1">
+      <table id = "wordList" border = "1" style="float:left;"> <!-- This is where the words will be outputted w/ their value -->
         <tr>
           <th> Word </th>
           <th> Points </th>
         </tr>
-      </table> <!-- This is where the words will be outputted w/ their value -->
+      </table>
+      <table id = "letterCheck" border = "1" style="float:left;"> <!-- Table where you can guess the value for each letter -->
+        <tr>
+          <th> Letters </th>
+          <th> Guess </th>
+        </tr>
+      </table>
     </div>
-    <table></table> <!-- Table where you can guess the value for each letter -->
   <script src="main.js"></script> <!-- the actual javascript -->
   </body>
 </html>
